@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Página Web</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        /* Menú lateral (naranja) inicial oculto */
+        .menu-lateral {
+            background-color: orange;
+            width: 200px;
+            height: 0; /* Inicialmente colapsado */
+            position: absolute;
+            top: 100px; /* Justo debajo del header */
+            left: 0;
+            overflow: hidden;
+            transition: 0.3s;
+            z-index: 998;
+        }
+        .menu-lateral a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            padding: 15px;
+            display: block;
+        }
+        .menu-lateral a:hover {
+            background-color: darkorange;
+        }
+        /* Contenedor para el bloque del menú y las imágenes */
+        .menu-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            position: relative;
+            top: 50px; /* Justo debajo del header */
+        }
+        /* Botón del menú a la izquierda */
+        .abrir-menu {
+            background-color: orange;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 1001;
+        }
+        /* Menú lateral abierto */
+        .menu-lateral.abierto {
+            height: 150px; /* Ajustar según el contenido */
+        }
+        /* Contenedor de imágenes funcionales a la derecha */
+        .funcionalidades {
+            display: flex;
+            gap: 15px;
+        }
+        .funcionalidades img {
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+        }
+        /* Menú superior */
+        .menu-superior {
+            background-color: orange;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        .menu-superior a {
+            text-decoration: none;
+            color: white;
+            font-size: 18px;
+            margin-right: 15px;
+        }
+        /* Área de contenido principal */
+        .contenido {
+            margin-top: 160px; /* Espacio para el menú superior y el bloque del menú */
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100vh - 160px); /* Resta la altura del header y del bloque del menú */
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Menú superior -->
+    <div class="menu-superior">
+        <div>
+            <!-- Nombre o logo del sitio -->
+            <a href="#">Mi Página Web</a>
+        </div>
+        <div class="derecha">
+            <!-- Botón de notificaciones -->
+            <button onclick="window.open('notificaciones.html', '_blank')">Notificaciones</button>
+            <!-- Botón de compartir -->
+            <button onclick="compartirPagina()">Compartir</button>
+        </div>
+    </div>
+
+    <!-- Contenedor para el bloque del botón del menú y las imágenes -->
+    <div class="menu-container">
+        <!-- Botón para abrir el menú -->
+        <button class="abrir-menu" onclick="toggleMenu()">Menú</button>
+
+        <!-- Imágenes funcionales a la derecha -->
+        <div class="funcionalidades">
+            <!-- Botón de enviar mensaje -->
+            <img src="./img/message.png" alt="Enviar Mensaje" onclick="enviarMensaje()">
+            <!-- Botón de recibir notificaciones -->
+            <img src="./img/notification.png" alt="Recibir Notificaciones" onclick="window.open('notificaciones.html', '_blank')">
+            <!-- Botón de compartir -->
+            <img src="./img/share.png" alt="Compartir Página" onclick="compartirPagina()">
+            <!-- Botón para buscar enlaces del menú -->
+            <img src="./img/search.png" alt="Buscar Enlaces" onclick="toggleMenu()">
+        </div>
+    </div>
+
+    <!-- Menú lateral (naranja) debajo del bloque del menú -->
+    <div id="menuLateral" class="menu-lateral">
+        <a href="#" onclick="cargarPagina('https://www.ieshlanz.es/')">IESHLanz</a>
+        <a href="#" onclick="cargarPagina('https://educacionadistancia.juntadeandalucia.es/centros/granada/login/index.php')">Moodle</a>
+        <a href="#" onclick="cargarPagina('https://www.instagram.com/ieshlanz/')">Instagram</a>
+    </div>
+
+    <!-- Área de contenido -->
+    <div class="contenido">
+        <iframe id="contenido" src="https://www.ieshlanz.es/"></iframe>
+    </div>
+
+    <script>
+        // Función para alternar el menú lateral (desplegar o esconder)
+        function toggleMenu() {
+            const menuLateral = document.getElementById('menuLateral');
+            menuLateral.classList.toggle('abierto');
+        }
+
+        // Función para cambiar la página dentro del iframe
+        function cargarPagina(url) {
+            document.getElementById('contenido').src = url;
+        }
+
+        // Función para compartir la página
+        function compartirPagina() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Mi Página Web',
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Página compartida con éxito');
+                }).catch(console.error);
+            } else {
+                alert("La función de compartir no está disponible en este navegador.");
+            }
+        }
+
+        // Función para enviar mensaje (personalizar esta acción según lo que necesites)
+        function enviarMensaje() {
+            alert("Enviar mensaje (personalizar la funcionalidad)");
+        }
+    </script>
+
+</body>
+</html>
